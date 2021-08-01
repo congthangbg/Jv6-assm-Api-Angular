@@ -1,0 +1,15 @@
+<!-- <div class="list-group" xmlns:th="http://www.thymeleaf.org">
+  
+   <a th:href="#" class="list-group-item list-group-item-action">First item</a>
+   <a th:href="#" class="list-group-item list-group-item-action">Second item</a>
+   <a th:href="#" class="list-group-item list-group-item-action">Third item</a>
+ </div> -->
+
+ <div class="list-group" xmlns:th="http://www.thymeleaf.org">
+  <a href="#" class="list-group-item list-group-item-action active">
+    <b class="glyphicon glyphicon-briefcase"></b>
+    Danh mục
+  </a>
+  <a th:each="c : ${cates}"  th:href="@{|/product/list?cid=${c.id}|}"
+   class="list-group-item list-group-item-action">[[${c.name}]]</a>
+</div>

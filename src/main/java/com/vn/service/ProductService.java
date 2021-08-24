@@ -41,6 +41,8 @@ public interface ProductService {
 
 	Product create(Product product);
 
+	List<Product> listSearch(String key);
+
 
 
 }

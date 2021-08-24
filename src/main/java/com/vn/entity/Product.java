@@ -34,6 +34,7 @@ public class Product  implements Serializable{
 	@Column(name = "Createdate")
 	Date createDate = new Date();
 	Boolean available;
+	
 	@ManyToOne
 	@JoinColumn(name = "Categoryid")
 	Category category;

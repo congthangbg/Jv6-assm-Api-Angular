@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +23,11 @@ public class AccountRestController {
 	AccountService accountService;
 	
 	@GetMapping
-	public List<Account> getAccounts(@RequestParam("admin")Optional<Boolean> admin){
+	public ResponseEntity<List<Account>> getAccounts(@RequestParam("admin")Optional<Boolean> admin){
 		if(admin.orElse(false)) {
-			return accountService.getAdministrators();
+			return  ResponseEntity.ok(accountService.getAdministrators()) ;
 		}
-		return accountService.findAll();
+		return ResponseEntity.ok(accountService.findAll());
 	}
 }
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,26 +28,34 @@ public class AuthorityRestController {
 	AuthorityService authorityService;
 	
 	@GetMapping("/list")
-	public List<Authority> findAll(@RequestParam("admin") Optional<Boolean> admin){
+	public ResponseEntity<List<Authority>> findAll(@RequestParam("admin") Optional<Boolean> admin){
 		if(admin.orElse(false)) {
 			List<Authority> list= authorityService.findAuthoritiesOfAdministrator();
 			for (Authority authority : list) {
 				System.out.println(authority.getAccount().getFullname());
 			}
-			return authorityService.findAuthoritiesOfAdministrator();
+			return ResponseEntity.ok(authorityService.findAuthoritiesOfAdministrator());
 		}
-		return authorityService.findAll();
+		return ResponseEntity.ok(authorityService.findAll());
 	}
 	
 
 	@PostMapping("save")
-	public Authority post(@RequestBody Authority auth) {
-		return authorityService.save(auth);
+	public ResponseEntity<Authority> post(@RequestBody Authority auth) {
+		if(auth != null ) {
+			return ResponseEntity.ok(authorityService.save(auth));
+		}else {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 	
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id") Integer id) {
-		authorityService.deleteById(id);
+		if(id != null) {
+			authorityService.deleteById(id);
+		}else {
+			throw new RuntimeException();
+		}
 	}
 	
 	

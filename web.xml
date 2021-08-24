@@ -1,0 +1,6 @@
+<filter>
+    <filter-name>CookieFilter</filter-name>
+    <filter-class>
+        my.package.CookieFilter
+    </filter-class>
+</filter>

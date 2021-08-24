@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,28 +34,51 @@ public class ProductRestController {
 	OrderDetailService orderDetailService;
 	
 	@GetMapping()
-	public List<Product> getAll() {
-		return productService.findAll();
+	public ResponseEntity<List<Product>> getAll() {
+		try {
+			return ResponseEntity.ok(productService.findAll());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
 	}
 	
+
+	
+	
 	@GetMapping("{id}")
-	public Optional<Product> getOne(@PathVariable("id") Integer id) {
-		return productService.findById(id);
+	public ResponseEntity<Object> getOne(@PathVariable("id") Integer id) {
+		if(id != null) {
+			return ResponseEntity.ok(productService.findById(id));
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
 	}
 
 	@PostMapping
-	public Product save(@RequestBody Product product) {
-		return productService.save(product);
+	public ResponseEntity<Object> save(@RequestBody Product product) {
+		if(product != null) {
+			return ResponseEntity.ok(productService.save(product));
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
 	}
 
 	@PutMapping("{id}")
-	public Product update(@PathVariable("id") Integer id, @RequestBody Product product) {
-		return productService.save(product);
+	public ResponseEntity<Object> update(@PathVariable("id") Integer id, @RequestBody Product product) {
+		System.out.println("id :"+id);
+		System.out.println("Product" + product.getId() + "----"+ product.getName());
+		if(product != null) {
+			return ResponseEntity.ok(productService.save(product));
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
 	}
 	
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id") Integer id) {
 		 productService.deleteById(id);
 	}
+	
+	
 	
 }

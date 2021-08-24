@@ -4,9 +4,11 @@
 }
 
 .poly-item .panel-title{
-	font-size: smaller;
+	font-size: 14px;
 }
 
 .poly-item-detail img{
 	max-width: 80%;
+	font-size: 14px;
 }
+

@@ -3,6 +3,8 @@ package com.vn.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +34,21 @@ public class ProductController {
 		}
 		return "product/list";
 	}
+	
+	@GetMapping("/list")
+	public String getAllList(Model model,@PathParam("key")String key) {
+		
+		if(!key.equals("")) {
+			List<Product> list = productService.listSearch(key);
+			model.addAttribute("items", list);
+		}else {
+			List<Product> list = productService.findAll();
+			model.addAttribute("items", list);
+		} 
+		
+		return "product/list";
+	}
+	
 
 	@GetMapping("/product/detail/{id}")
 	public String detail(Model model,@PathVariable("id")Integer id) {
